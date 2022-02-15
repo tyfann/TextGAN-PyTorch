@@ -42,13 +42,18 @@ gen_pretrain = int(False)
 dis_pretrain = int(False)
 MLE_train_epoch = 150
 clas_pre_epoch = 5
-ADV_train_epoch = 2000
+ADV_train_epoch = 50
 tips = '{} experiments'
 
 # ===Oracle or Real===
-if_real_data = [int(False), int(True), int(True), int(False), int(True), int(True)]
-dataset = ['oracle', 'mr15', 'amazon_app_book', 'oracle', 'image_coco', 'emnlp_news']
-vocab_size = [5000, 0, 0, 5000, 0, 0]
+
+if_real_data = [int(True)]
+# if_real_data = [int(False), int(True), int(True), int(False), int(True), int(True), int(True)]
+dataset = ['x']
+# dataset = ['oracle', 'mr15', 'amazon_app_book', 'oracle', 'image_coco', 'emnlp_news', '0']
+vocab_size = [100]
+# vocab_size = [5000, 0, 0, 5000, 0, 0, 0]
+
 
 # ===CatGAN Param===
 n_parent = 1

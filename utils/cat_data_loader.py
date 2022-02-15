@@ -7,6 +7,9 @@
 # @Description  : 
 # Copyrights (C) 2018. All Rights Reserved.
 
+import sys# 加了这了
+sys.path.append("./")  ## 这个
+
 import random
 from torch.utils.data import Dataset, DataLoader
 
@@ -47,7 +50,8 @@ class CatGenDataIter:
         """
         input: same as target, but start with start_letter.
         """
-        inp, target, label = self.prepare(samples_list)
+        inp, target, label = self.load_data(samples_list)
+        # inp, target, label = self.prepare(samples_list)
         all_data = [{'input': i, 'target': t, 'label': l} for (i, t, l) in zip(inp, target, label)]
         return all_data
 
@@ -61,7 +65,8 @@ class CatGenDataIter:
 
     def prepare(self, samples_list, gpu=False):
         """Add start_letter to samples as inp, target same as samples"""
-        all_samples = torch.cat(samples_list, dim=0).long()
+        # all_samples = torch.cat(samples_list, dim=0).long()
+        all_samples = samples_list.long()
         target = all_samples
         inp = torch.zeros(all_samples.size()).long()
         inp[:, 0] = self.start_letter
@@ -86,6 +91,7 @@ class CatGenDataIter:
         """Load real data from local file"""
         self.tokens = get_tokenlized(filename)
         samples_index = tokens_to_tensor(self.tokens, self.word2idx_dict)
+        print(samples_index)
         return self.prepare(samples_index)
 
 
@@ -161,3 +167,16 @@ class CatClasDataIter:
         if gpu:
             return inp.cuda(), target.cuda()
         return inp, target
+
+if __name__ == '__main__':
+
+    filename = '/root/autodl-tmp/TextGAN/dataset/x.txt'
+    catGenDataIter = CatGenDataIter(filename)
+
+    # t = torch.tensor([[1],[2],[0]])
+    # train_samples_list = [t, t, t]
+    # catGenDataIter = CatGenDataIter(train_samples_list)
+    # samples = list(torch.tensor([[i for i in range(15)],[2 for i in range(15)]]))
+    # catClasDataIter = CatClasDataIter(samples)
+    # all_train_data = catGenDataIter.prepare(train_samples_list)
+    print(catGenDataIter.loader.dataset.data)

@@ -11,6 +11,7 @@ import nltk
 import numpy as np
 import os
 import torch
+import jieba
 
 import config as cfg
 
@@ -18,9 +19,11 @@ import config as cfg
 def get_tokenlized(file):
     """tokenlize the file"""
     tokenlized = list()
+    # , "r", encoding="utf-8"
     with open(file) as raw:
         for text in raw:
-            text = nltk.word_tokenize(text.lower())
+            text = list(jieba.cut(text.lower()))
+            # text = nltk.word_tokenize(text.lower())
             tokenlized.append(text)
     return tokenlized
 

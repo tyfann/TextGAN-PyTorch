@@ -39,14 +39,22 @@ oracle_pretrain = int(True)
 gen_pretrain = int(False)
 dis_pretrain = int(False)
 MLE_train_epoch = 8
-ADV_train_epoch = 200
-inter_epoch = 10
+ADV_train_epoch = 50
+inter_epoch = 2
 tips = 'LeakGAN experiments'
 
 # ===Oracle  or Real===
-if_real_data = [int(False), int(True), int(True)]
-dataset = ['oracle', 'image_coco', 'emnlp_news']
-vocab_size = [5000, 0, 0]
+
+
+if_real_data = [val for val in [int(True)] for _ in range(15)]
+# if_real_data = [int(False), int(True), int(True), int(False), int(True), int(True), int(True)]
+dataset = list(i for i in range(0,15))
+# dataset = ['oracle', 'mr15', 'amazon_app_book', 'oracle', 'image_coco', 'emnlp_news', '0']
+vocab_size = list(0 for i in range(15))
+# vocab_size = [5000, 0, 0, 5000, 0, 0, 0]
+# if_real_data = [int(False), int(True), int(True)]
+# dataset = ['oracle', 'image_coco', 'emnlp_news']
+# vocab_size = [5000, 0, 0]
 
 # ===Basic Param===
 data_shuffle = int(False)
@@ -55,7 +63,7 @@ gen_init = 'normal'
 dis_init = 'uniform'
 samples_num = 10000
 batch_size = 64
-max_seq_len = 20
+max_seq_len = 100
 gen_lr = 0.0015
 dis_lr = 5e-5
 pre_log_step = 1

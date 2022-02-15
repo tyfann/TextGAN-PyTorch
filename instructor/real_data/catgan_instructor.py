@@ -59,6 +59,8 @@ class CatGANInstructor(BasicInstructor):
         self.G_criterion = [GANLoss(loss_mode, 'G', cfg.d_type, CUDA=cfg.CUDA) for loss_mode in cfg.mu_type.split()]
         self.D_criterion = GANLoss(cfg.loss_type, 'D', cfg.d_type, CUDA=cfg.CUDA)
 
+        self.train_samples_list = list(torch.tensor([[i for i in range(15)]]))
+
         # DataLoader
         self.all_train_data = CatGenDataIter(self.train_samples_list)
 
