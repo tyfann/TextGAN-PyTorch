@@ -6,6 +6,7 @@
 # @Blog         : http://zhiweil.ml/
 # @Description  : 
 # Copyrights (C) 2018. All Rights Reserved.
+import sys
 
 import nltk
 import numpy as np
@@ -25,7 +26,28 @@ def get_tokenlized(file):
             text = list(jieba.cut(text.lower()))
             # text = nltk.word_tokenize(text.lower())
             tokenlized.append(text)
+    # print(tokenlized)
+
     return tokenlized
+
+def get_labels(filename):
+    tokenlized = list()
+    labels = list()
+    file = open(filename,'r', encoding='utf-8')
+    line = file.readline()
+    i = 0
+    while line:
+        text = line
+        text = list(jieba.cut(text.lower()))
+        tokenlized.append(text)
+        line = file.readline()
+        label = line.split('\n')[0]
+        labels.append(label)
+        i = i+1
+        line = file.readline()
+    file.close()
+    return tokenlized, labels
+
 
 
 def get_word_list(tokens):
@@ -350,6 +372,24 @@ def build_embedding_matrix(dataset):
 
 if __name__ == '__main__':
     os.chdir('../')
+    # tk, lb = get_labels('dataset/x.txt')
+    # with open('dataset/x_wi_dict.txt', 'r') as dictin:
+    #     word2idx_dict = eval(dictin.read().strip())
+    # t = tokens_to_tensor(tk, word2idx_dict)
+    # print(t)
+    # tokens = get_tokenlized('dataset/x.txt')
+    # tensor = tokens_to_tensor(tokens, word2idx_dict)
+    # print(type(tensor))
+    # target = tensor[::2]
+    # print(target)
+    # sys.exit()
+    # inp = torch.zeros(target.size()).long()
+    # inp[:, 0] = 1
+    # inp[:, 1:] = target[:, :37 - 1]
+    # print(inp)
+    # labels = tensor[1::2, 0]
+    #
+    # print(labels)
     # process_cat_text()
     # load_test_dict('mr15')
     # extend_clas_train_data()

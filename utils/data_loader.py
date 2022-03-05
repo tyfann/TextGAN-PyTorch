@@ -7,12 +7,13 @@
 # @Description  : 
 # Copyrights (C) 2018. All Rights Reserved.
 
+import sys
+sys.path.append('./')
+
 import random
 from torch.utils.data import Dataset, DataLoader
 
 from utils.text_process import *
-
-
 class GANDataset(Dataset):
     def __init__(self, data):
         self.data = data
@@ -27,13 +28,21 @@ class GANDataset(Dataset):
 class GenDataIter:
     def __init__(self, samples, if_test_data=False, shuffle=None):
         self.batch_size = cfg.batch_size
+        # self.batch_size = 64
         self.max_seq_len = cfg.max_seq_len
+        # self.max_seq_len = 37
         self.start_letter = cfg.start_letter
+        # self.start_letter = 1
         self.shuffle = cfg.data_shuffle if not shuffle else shuffle
-        if cfg.if_real_data:
+        self.shuffle = False if not shuffle else shuffle
+
+        # if cfg.if_real_data:
+        if True:
             self.word2idx_dict, self.idx2word_dict = load_dict(cfg.dataset)
+            # self.word2idx_dict, self.idx2word_dict = load_dict('x')
         if if_test_data:  # used for the classifier
             self.word2idx_dict, self.idx2word_dict = load_test_dict(cfg.dataset)
+            # self.word2idx_dict, self.idx2word_dict = load_test_dict('x')
 
         self.loader = DataLoader(
             dataset=GANDataset(self.__read_data__(samples)),
@@ -70,14 +79,27 @@ class GenDataIter:
     @staticmethod
     def prepare(samples, gpu=False):
         """Add start_letter to samples as inp, target same as samples"""
+        # inp = torch.zeros(samples.size()).long()
+        # target = samples
+        # inp[:, 0] = cfg.start_letter
+        # inp[:, 1:] = target[:, :cfg.max_seq_len - 1]
         inp = torch.zeros(samples.size()).long()
         target = samples
         inp[:, 0] = cfg.start_letter
-        inp[:, 1:] = target[:, :cfg.max_seq_len - 1]
+        inp[:, 1:cfg.max_seq_len] = target[:, :cfg.max_seq_len - 1]
 
         if gpu:
             return inp.cuda(), target.cuda()
         return inp, target
+
+        # all_samples = samples
+        # target = all_samples[::2]
+        # inp = torch.zeros(target.size()).long()
+        # inp[:, 0] = 1
+        # inp[:, 1:] = target[:, :37 - 1]
+        # if gpu:
+        #     return inp.cuda(), target.cuda()
+        # return inp, target
 
     def load_data(self, filename):
         """Load real data from local file"""
@@ -125,3 +147,7 @@ class DisDataIter:
         if gpu:
             return inp.cuda(), target.cuda()
         return inp, target
+
+if __name__ == '__main__':
+    x = GenDataIter('dataset/x.txt')
+    print(x.loader.dataset.data)

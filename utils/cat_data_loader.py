@@ -7,8 +7,13 @@
 # @Description  : 
 # Copyrights (C) 2018. All Rights Reserved.
 
+<<<<<<< HEAD
 import sys# 加了这了
 sys.path.append("./")  ## 这个
+=======
+import sys
+sys.path.append("../")
+>>>>>>> catGAN add
 
 import random
 from torch.utils.data import Dataset, DataLoader
@@ -26,15 +31,23 @@ class GANDataset(Dataset):
     def __len__(self):
         return len(self.data)
 
-
+# 表示train中的内容
 class CatGenDataIter:
     def __init__(self, samples_list, shuffle=None):
         self.batch_size = cfg.batch_size
+        # self.batch_size = 64
         self.max_seq_len = cfg.max_seq_len
+        # self.max_seq_len = 37
         self.start_letter = cfg.start_letter
+        # self.start_letter = 1
         self.shuffle = cfg.data_shuffle if not shuffle else shuffle
+        # self.shuffle = False if not shuffle else shuffle
+
         if cfg.if_real_data:
+        # if True:
             self.word2idx_dict, self.idx2word_dict = load_dict(cfg.dataset)
+            # self.word2idx_dict, self.idx2word_dict = load_dict('x')
+
 
         self.loader = DataLoader(
             dataset=GANDataset(self.__read_data__(samples_list)),
@@ -65,12 +78,35 @@ class CatGenDataIter:
 
     def prepare(self, samples_list, gpu=False):
         """Add start_letter to samples as inp, target same as samples"""
+<<<<<<< HEAD
         # all_samples = torch.cat(samples_list, dim=0).long()
         all_samples = samples_list.long()
+=======
+        # all_samples = samples_list   #获取文件中的全部内容
+        # target = all_samples[::2][0]  #获取文件偶数（从0开始）行的标题
+        # inp = torch.zeros(target.size()).long()
+        # inp[:, 0] = 1
+        # inp[:, 1:] = target[:, :37 - 1]
+        # label = all_samples[1:2, 0]
+
+
+        # num = len(samples_list)
+        # print(num)
+        # print(label)
+        # for i in range(0,num,2):
+        #      label[i] = samples_list[i][2][0]
+        # print(label)
+        # for idx in range(len(samples_list)):
+        #     start = sum([samples_list[i].size(0) for i in range(idx)])
+        #     label[start: start + samples_list[idx].size(0)] = idx
+
+        # len(sample_list) == k_label
+        all_samples = torch.cat(samples_list, dim=0).long()
+>>>>>>> catGAN add
         target = all_samples
         inp = torch.zeros(all_samples.size()).long()
         inp[:, 0] = self.start_letter
-        inp[:, 1:] = target[:, :self.max_seq_len - 1]
+        inp[:, 1:self.max_seq_len] = target[:, :self.max_seq_len - 1]
 
         label = torch.zeros(all_samples.size(0)).long()
         for idx in range(len(samples_list)):
@@ -91,10 +127,14 @@ class CatGenDataIter:
         """Load real data from local file"""
         self.tokens = get_tokenlized(filename)
         samples_index = tokens_to_tensor(self.tokens, self.word2idx_dict)
+<<<<<<< HEAD
         print(samples_index)
+=======
+        # print(samples_index[0])
+>>>>>>> catGAN add
         return self.prepare(samples_index)
 
-
+# 表示testdata中的内容
 class CatClasDataIter:
     """Classifier data loader, handle for multi label data"""
 
@@ -167,6 +207,7 @@ class CatClasDataIter:
         if gpu:
             return inp.cuda(), target.cuda()
         return inp, target
+<<<<<<< HEAD
 
 if __name__ == '__main__':
 
@@ -180,3 +221,14 @@ if __name__ == '__main__':
     # catClasDataIter = CatClasDataIter(samples)
     # all_train_data = catGenDataIter.prepare(train_samples_list)
     print(catGenDataIter.loader.dataset.data)
+=======
+# if __name__ == '__main__':
+#     t = torch.tensor([[1],[2],[3]])
+#     train_samples_list = [t,t,t]
+#     catGenDataIter = CatGenDataIter(train_samples_list)
+    # samples = list(torch.tensor([[i for i in range(15)],[2 for i in range(15)]]))
+    # catClasDataIter = CatClasDataIter(samples)
+    # all_train_data = catGenDataIter.prepare(train_samples_list)
+    # print(type(train_samples_list))
+    # print(catGenDataIter.loader.dataset.data)
+>>>>>>> catGAN add

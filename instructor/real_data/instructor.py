@@ -6,6 +6,8 @@
 # @Blog         : http://zhiweil.ml/
 # @Description  : 
 # Copyrights (C) 2018. All Rights Reserved.
+import sys
+sys.path.append("../")
 
 import numpy as np
 import torch
@@ -51,7 +53,10 @@ class BasicInstructor:
                                    range(cfg.k_label)]
 
             self.train_samples_list = [self.train_data_list[i].target for i in range(cfg.k_label)]
+            # self.train_samples_list = [self.train_data_list[i].target for i in range(2)]
             self.clas_samples_list = [self.clas_data_list[i].target for i in range(cfg.k_label)]
+            # self.clas_samples_list = [self.clas_data_list[i].target for i in range(2)]
+
         except:
             pass
 
@@ -143,6 +148,9 @@ class BasicInstructor:
         # Prepare data for Classifier
         clas_data = CatClasDataIter(self.clas_samples_list)
         eval_clas_data = CatClasDataIter(self.train_samples_list)
+
+        # clas_data = CatClasDataIter(self.train_samples_list)
+        # eval_clas_data = CatClasDataIter(self.clas_samples_list)
 
         max_acc = 0
         best_clas = None
@@ -265,3 +273,7 @@ class BasicInstructor:
         self.gen.temperature.data = torch.Tensor([get_fixed_temperature(cfg.temperature, i, N, cfg.temp_adpt)])
         if cfg.CUDA:
             self.gen.temperature.data = self.gen.temperature.data.cuda()
+
+# if __name__ == '__main__':
+#     print("here")
+#     basic = BasicInstructor(opt)

@@ -155,8 +155,15 @@ class CNNClassifier(CNNDiscriminator):
         self.feature_dim = sum(num_filters)
         self.emb_dim_single = int(embed_dim / num_rep)
 
+        # vocab_size = 315(train+test), embed_dim = 64
         self.embeddings = nn.Embedding(vocab_size, embed_dim, padding_idx=padding_idx)
 
+        # num_filters = [200]
+        # filter_sizes = [2,3,4,5]
+        # nn.Conv2d(1, 200, (2, 64))
+        # nn.Conv2d(1, 200, (3, 64))
+        # nn.Conv2d(1, 200, (4, 64))
+        # nn.Conv2d(1, 200, (5, 64))
         self.convs = nn.ModuleList([
             nn.Conv2d(1, n, (f, embed_dim)) for (n, f) in zip(num_filters, filter_sizes)
         ])  # vanilla
@@ -179,7 +186,8 @@ class CNNClassifier(CNNDiscriminator):
         :param inp: batch_size * seq_len * vocab_size
         :return logits: [batch_size * num_rep] (1-D tensor)
         """
-        emb = self.embeddings(inp).unsqueeze(1)  # batch_size * 1 * max_seq_len * embed_dim
+        # embeddings作用：从[64, 19] -> [64, 19, 64]
+        emb = self.embeddings(inp).unsqueeze(1)  # batch_size * 1 * max_seq_len * embed_dim [64, 1, 40, 64]
 
         # vanilla
         convs = [F.relu(conv(emb)).squeeze(3) for conv in self.convs]  # [batch_size * num_filter * length]

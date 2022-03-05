@@ -76,7 +76,7 @@ cd run
 python3 run_[model_name].py 0 0	# The first 0 is job_id, the second 0 is gpu_id
 
 # For example
-python3 run_seqgan.py 0 0
+python3 run_catgan.py 0 0
 ```
 
 ## Features
@@ -104,110 +104,6 @@ python3 run_seqgan.py 0 0
    In `config.py`, the program would automatically select a GPU device with the least `GPU-Util` in `nvidia-smi`. This feature is enabled by default. If you want to manually select a GPU device, please uncomment the `--device` args in `run_[run_model].py` and specify a GPU device with command.
 
 ## Implementation Details
-
-### SeqGAN
-
-- run file: [run_seqgan.py](run/run_seqgan.py)
-
-- Instructors: [oracle_data](instructor/oracle_data/seqgan_instructor.py), [real_data](instructor/real_data/seqgan_instructor.py)
-
-- Models: [generator](models/SeqGAN_G.py), [discriminator](models/SeqGAN_D.py)
-
-- Structure (from [SeqGAN](https://arxiv.org/pdf/1609.05473.pdf))
-
-  ![model_seqgan](./assets/model_seqgan.png)
-
-### LeakGAN
-
-- run file: [run_leakgan.py](run/run_leakgan.py)
-
-- Instructors: [oracle_data](instructor/oracle_data/leakgan_instructor.py), [real_data](instructor/real_data/leakgan_instructor.py)
-
-- Models: [generator](models/LeakGAN_G.py), [discriminator](models/LeakGAN_D.py)
-
-- Structure (from [LeakGAN](https://arxiv.org/pdf/1709.08624.pdf))
-
-  ![model_leakgan](assets/model_leakgan.png)
-
-### MaliGAN
-
-- run file: [run_maligan.py](run/run_maligan.py)
-
-- Instructors: [oracle_data](instructor/oracle_data/maligan_instructor.py), [real_data](instructor/real_data/maligan_instructor.py)
-
-- Models: [generator](models/MaliGAN_G.py), [discriminator](models/MaliGAN_D.py)
-
-- Structure (from my understanding)
-
-  ![model_maligan](assets/model_maligan.png)
-
-### JSDGAN
-
-- run file: [run_jsdgan.py](run/run_jsdgan.py)
-
-- Instructors: [oracle_data](instructor/oracle_data/jsdgan_instructor.py), [real_data](instructor/real_data/jsdgan_instructor.py)
-
-- Models: [generator](models/JSDGAN_G.py) (No discriminator)
-
-- Structure (from my understanding)
-
-  ![model_jsdgan](assets/model_jsdgan.png)
-
-### RelGAN
-
-- run file: [run_relgan.py](run/run_relgan.py)
-
-- Instructors: [oracle_data](instructor/oracle_data/relgan_instructor.py), [real_data](instructor/real_data/relgan_instructor.py)
-
-- Models: [generator](models/RelGAN_G.py), [discriminator](models/RelGAN_D.py)
-
-- Structure  (from my understanding)
-
-  ![model_relgan](assets/model_relgan.png)
-  
-### DPGAN
-
-- run file: [run_dpgan.py](run/run_dpgan.py)
-
-- Instructors: [oracle_data](instructor/oracle_data/dpgan_instructor.py), [real_data](instructor/real_data/dpgan_instructor.py)
-
-- Models: [generator](models/DPGAN_G.py), [discriminator](models/DPGAN_D.py)
-
-- Structure  (from [DPGAN](https://arxiv.org/abs/1802.01345))
-
-  ![model_dpgan](assets/model_dpgan.png)
-  
-### DGSAN
-
-- run file: [run_dgsan.py](run/run_dgsan.py)
-
-- Instructors: [oracle_data](instructor/oracle_data/dgsan_instructor.py), [real_data](instructor/real_data/dgsan_instructor.py)
-
-- Models: [generator](models/DGSAN_G.py), [discriminator](models/DGSAN_D.py)
-
-### CoT
-
-- run file: [run_cot.py](run/run_cot.py)
-
-- Instructors: [oracle_data](instructor/oracle_data/cot_instructor.py), [real_data](instructor/real_data/cot_instructor.py)
-
-- Models: [generator](models/CoT_G.py), [discriminator](models/CoT_D.py)
-
-- Structure  (from [CoT](https://arxiv.org/abs/1804.03782))
-
-  ![model_cot](assets/model_cot.png)
-
-### SentiGAN
-
-- run file: [run_sentigan.py](run/run_sentigan.py)
-
-- Instructors: [oracle_data](instructor/oracle_data/sentigan_instructor.py), [real_data](instructor/real_data/sentigan_instructor.py)
-
-- Models: [generator](models/SentiGAN_G.py), [discriminator](models/SentiGAN_D.py)
-
-- Structure (from [SentiGAN](https://www.ijcai.org/proceedings/2018/0618.pdf))
-
-  ![model_sentigan](assets/model_sentigan.png)
 
 ### CatGAN
 

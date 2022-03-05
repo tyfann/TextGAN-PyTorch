@@ -11,6 +11,7 @@ from subprocess import call
 
 import os
 
+
 # Job id and gpu_id
 if len(sys.argv) > 2:
     job_id = int(sys.argv[1])
@@ -74,7 +75,7 @@ gen_init = 'truncated_normal'
 dis_init = 'uniform'
 samples_num = 10000
 batch_size = 64
-max_seq_len = 20
+max_seq_len = 40
 gen_lr = 0.01
 gen_adv_lr = 1e-4
 dis_lr = 1e-4

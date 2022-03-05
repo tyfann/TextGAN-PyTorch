@@ -16,6 +16,7 @@ from models.discriminator import CNNDiscriminator, CNNClassifier
 dis_filter_sizes = [2, 3, 4, 5]
 dis_num_filters = [300, 300, 300, 300]
 clas_filter_sizes = [2, 3, 4, 5]
+# clas_filter_sizes = [2, 3]
 clas_num_filters = [200]
 
 

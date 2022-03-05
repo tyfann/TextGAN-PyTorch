@@ -58,31 +58,6 @@ def create_logger(name, silent=False, to_disk=False, log_file=None):
     return log
 
 
-def create_oracle():
-    """Create a new Oracle model and Oracle's samples"""
-    import config as cfg
-    from models.Oracle import Oracle
-
-    print('Creating Oracle...')
-    oracle = Oracle(cfg.gen_embed_dim, cfg.gen_hidden_dim, cfg.vocab_size,
-                    cfg.max_seq_len, cfg.padding_idx, gpu=cfg.CUDA)
-    if cfg.CUDA:
-        oracle = oracle.cuda()
-
-    torch.save(oracle.state_dict(), cfg.oracle_state_dict_path)
-
-    big_samples = oracle.sample(cfg.samples_num, 4 * cfg.batch_size)
-    # large
-    torch.save(big_samples, cfg.oracle_samples_path.format(cfg.samples_num))
-    # small
-    torch.save(oracle.sample(cfg.samples_num // 2, 4 * cfg.batch_size),
-               cfg.oracle_samples_path.format(cfg.samples_num // 2))
-
-    oracle_data = GenDataIter(big_samples)
-    mle_criterion = nn.NLLLoss()
-    groud_truth = NLL.cal_nll(oracle, oracle_data.loader, mle_criterion)
-    print('NLL_Oracle Groud Truth: %.4f' % groud_truth)
-
 
 def get_fixed_temperature(temper, i, N, adapt):
     """A function to set up different temperature control policies"""

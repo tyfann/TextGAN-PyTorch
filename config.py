@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 # @Author       : William
 # @Project      : TextGAN-william
@@ -25,7 +26,11 @@ dis_pretrain = False
 clas_pretrain = False
 
 run_model = 'catgan'  # seqgan, leakgan, maligan, jsdgan, relgan, evogan, sentigan, catgan, dpgan, dgsan, cot
+<<<<<<< HEAD
 k_label = 3  # num of labels, >=2
+=======
+k_label = 15  # num of labels, >=2
+>>>>>>> catGAN add
 gen_init = 'truncated_normal'  # normal, uniform, truncated_normal
 dis_init = 'uniform'  # normal, uniform, truncated_normal
 
@@ -50,7 +55,11 @@ mu_type = 'ragan'  # rsgan lsgan ragan vanilla wgan hinge
 eval_type = 'Ra'  # standard, rsgan, nll, nll-f1, Ra, bleu3, bleu-f1
 d_type = 'Ra'  # S (Standard), Ra (Relativistic_average)
 vocab_size = 4683  # oracle: 5000, coco: 4683, emnlp: 5256, amazon_app_book: 6418, mr15: 6289
+<<<<<<< HEAD
 max_seq_len = 37  # oracle: 20, coco: 37, emnlp: 51, amazon_app_book: 40
+=======
+max_seq_len = 40  # oracle: 20, coco: 37, emnlp: 51, amazon_app_book: 40
+>>>>>>> catGAN add
 ADV_train_epoch = 2000  # SeqGAN, LeakGAN-200, RelGAN-3000
 extend_vocab_size = 0  # plus test data, only used for Classifier
 
@@ -66,7 +75,7 @@ PRE_clas_epoch = 10
 inter_epoch = 15  # LeakGAN-10
 batch_size = 64  # 64
 start_letter = 1
-padding_idx = 0
+padding_idx = 0 # 填充字符
 start_token = 'BOS'
 padding_token = 'EOS'
 gen_lr = 0.01  # 0.01
@@ -336,3 +345,4 @@ def init_param(opt):
     for d in dir_list:
         if not os.path.exists(d):
             os.makedirs(d)
+
