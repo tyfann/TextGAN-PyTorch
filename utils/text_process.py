@@ -26,14 +26,14 @@ def get_tokenlized(file):
             text = list(jieba.cut(text.lower()))
             # text = nltk.word_tokenize(text.lower())
             tokenlized.append(text)
-    # print(tokenlized)
 
     return tokenlized
+
 
 def get_labels(filename):
     tokenlized = list()
     labels = list()
-    file = open(filename,'r', encoding='utf-8')
+    file = open(filename, 'r', encoding='utf-8')
     line = file.readline()
     i = 0
     while line:
@@ -43,11 +43,10 @@ def get_labels(filename):
         line = file.readline()
         label = line.split('\n')[0]
         labels.append(label)
-        i = i+1
+        i = i + 1
         line = file.readline()
     file.close()
     return tokenlized, labels
-
 
 
 def get_word_list(tokens):

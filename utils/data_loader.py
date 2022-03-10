@@ -6,14 +6,17 @@
 # @Blog         : http://zhiweil.ml/
 # @Description  : 
 # Copyrights (C) 2018. All Rights Reserved.
-
+import logging
 import sys
+
 sys.path.append('./')
 
 import random
 from torch.utils.data import Dataset, DataLoader
 
 from utils.text_process import *
+
+
 class GANDataset(Dataset):
     def __init__(self, data):
         self.data = data
@@ -28,21 +31,15 @@ class GANDataset(Dataset):
 class GenDataIter:
     def __init__(self, samples, if_test_data=False, shuffle=None):
         self.batch_size = cfg.batch_size
-        # self.batch_size = 64
         self.max_seq_len = cfg.max_seq_len
-        # self.max_seq_len = 37
         self.start_letter = cfg.start_letter
-        # self.start_letter = 1
         self.shuffle = cfg.data_shuffle if not shuffle else shuffle
-        self.shuffle = False if not shuffle else shuffle
 
-        # if cfg.if_real_data:
-        if True:
+        if cfg.if_real_data:
             self.word2idx_dict, self.idx2word_dict = load_dict(cfg.dataset)
-            # self.word2idx_dict, self.idx2word_dict = load_dict('x')
+
         if if_test_data:  # used for the classifier
             self.word2idx_dict, self.idx2word_dict = load_test_dict(cfg.dataset)
-            # self.word2idx_dict, self.idx2word_dict = load_test_dict('x')
 
         self.loader = DataLoader(
             dataset=GANDataset(self.__read_data__(samples)),
@@ -77,7 +74,7 @@ class GenDataIter:
         return torch.cat([data[col].unsqueeze(0) for data in self.loader.dataset.data], 0)
 
     @staticmethod
-    def prepare(samples, gpu=False):
+    def prepare(samples, gpu=True):
         """Add start_letter to samples as inp, target same as samples"""
         # inp = torch.zeros(samples.size()).long()
         # target = samples
@@ -86,7 +83,13 @@ class GenDataIter:
         inp = torch.zeros(samples.size()).long()
         target = samples
         inp[:, 0] = cfg.start_letter
-        inp[:, 1:cfg.max_seq_len] = target[:, :cfg.max_seq_len - 1]
+        try:
+            # inp[:, 1:cfg.max_seq_len] = target[:, :cfg.max_seq_len - 1]
+            inp[:, 1:] = target[:, :cfg.max_seq_len - 1]
+        except:
+            logging.info("inp size = " + str(inp.size()) + " and target size = " + str(target.size()))
+            logging.error("target copy to inp error!")
+            sys.exit()
 
         if gpu:
             return inp.cuda(), target.cuda()
@@ -133,7 +136,7 @@ class DisDataIter:
         idx = random.randint(0, len(self.loader) - 1)
         return list(self.loader)[idx]
 
-    def prepare(self, pos_samples, neg_samples, gpu=False):
+    def prepare(self, pos_samples, neg_samples, gpu=True):
         """Build inp and target"""
         inp = torch.cat((pos_samples, neg_samples), dim=0).long().detach()  # !!!need .detach()
         target = torch.ones(inp.size(0)).long()
@@ -148,6 +151,8 @@ class DisDataIter:
             return inp.cuda(), target.cuda()
         return inp, target
 
+
 if __name__ == '__main__':
+    pass
     x = GenDataIter('dataset/x.txt')
     print(x.loader.dataset.data)

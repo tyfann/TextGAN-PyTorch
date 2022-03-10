@@ -6,6 +6,7 @@
 # @Blog         : http://zhiweil.ml/
 # @Description  : 
 # Copyrights (C) 2018. All Rights Reserved.
+import logging
 import sys
 sys.path.append("../")
 
@@ -43,6 +44,7 @@ class BasicInstructor:
             self.train_data = GenDataIter(cfg.train_data)
             self.test_data = GenDataIter(cfg.test_data, if_test_data=True)
         except:
+            logging.error("self.train_data or self.test_data load error!")
             pass
 
         try:
@@ -51,13 +53,12 @@ class BasicInstructor:
                                    range(cfg.k_label)]
             self.clas_data_list = [GenDataIter(cfg.cat_test_data.format(str(i)), if_test_data=True) for i in
                                    range(cfg.k_label)]
-
             self.train_samples_list = [self.train_data_list[i].target for i in range(cfg.k_label)]
-            # self.train_samples_list = [self.train_data_list[i].target for i in range(2)]
             self.clas_samples_list = [self.clas_data_list[i].target for i in range(cfg.k_label)]
-            # self.clas_samples_list = [self.clas_data_list[i].target for i in range(2)]
-
         except:
+            logging.error("self.train_data_list or self.test_data_list or self.clas_data_list or self.train_samples_list"
+                          " or self.clas_samples_list load error!")
+            sys.exit(0)
             pass
 
         # Criterion

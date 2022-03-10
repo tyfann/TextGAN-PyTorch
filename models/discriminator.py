@@ -18,7 +18,7 @@ from utils.helpers import truncated_normal_
 
 
 class CNNDiscriminator(nn.Module):
-    def __init__(self, embed_dim, vocab_size, filter_sizes, num_filters, padding_idx, gpu=False,
+    def __init__(self, embed_dim, vocab_size, filter_sizes, num_filters, padding_idx, gpu=True,
                  dropout=0.2):
         super(CNNDiscriminator, self).__init__()
         self.embedding_dim = embed_dim
@@ -78,7 +78,7 @@ class CNNDiscriminator(nn.Module):
 class GRUDiscriminator(nn.Module):
 
     def __init__(self, embedding_dim, vocab_size, hidden_dim, feature_dim, max_seq_len, padding_idx,
-                 gpu=False, dropout=0.2):
+                 gpu=True, dropout=0.2):
         super(GRUDiscriminator, self).__init__()
         self.hidden_dim = hidden_dim
         self.embedding_dim = embedding_dim
@@ -145,7 +145,7 @@ class GRUDiscriminator(nn.Module):
 # Classifier
 class CNNClassifier(CNNDiscriminator):
     def __init__(self, k_label, embed_dim, max_seq_len, num_rep, vocab_size, filter_sizes, num_filters, padding_idx,
-                 gpu=False, dropout=0.25):
+                 gpu=True, dropout=0.25):
         super(CNNClassifier, self).__init__(embed_dim, vocab_size, filter_sizes, num_filters, padding_idx,
                                             gpu, dropout)
 

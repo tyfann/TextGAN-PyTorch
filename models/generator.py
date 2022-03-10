@@ -17,7 +17,7 @@ from utils.helpers import truncated_normal_
 
 class LSTMGenerator(nn.Module):
 
-    def __init__(self, embedding_dim, hidden_dim, vocab_size, max_seq_len, padding_idx, gpu=False):
+    def __init__(self, embedding_dim, hidden_dim, vocab_size, max_seq_len, padding_idx, gpu=True):
         super(LSTMGenerator, self).__init__()
         self.name = 'vanilla'
 

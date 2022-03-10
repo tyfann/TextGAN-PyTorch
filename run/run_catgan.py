@@ -36,7 +36,7 @@ scriptname = 'main.py'
 # EvoGAN: General text generation model
 if_test = int(False)
 run_model = ['catgan', 'catgan', 'catgan', 'evogan', 'evogan', 'evogan']
-k_label = 2
+k_label = 15
 CUDA = int(True)
 ora_pretrain = int(True)
 gen_pretrain = int(False)
@@ -52,7 +52,7 @@ if_real_data = [int(True)]
 # if_real_data = [int(False), int(True), int(True), int(False), int(True), int(True), int(True)]
 dataset = ['x']
 # dataset = ['oracle', 'mr15', 'amazon_app_book', 'oracle', 'image_coco', 'emnlp_news', '0']
-vocab_size = [100]
+vocab_size = [160000]
 # vocab_size = [5000, 0, 0, 5000, 0, 0, 0]
 
 
@@ -74,7 +74,7 @@ model_type = 'vanilla'
 gen_init = 'truncated_normal'
 dis_init = 'uniform'
 samples_num = 10000
-batch_size = 64
+batch_size = 16
 max_seq_len = 40
 gen_lr = 0.01
 gen_adv_lr = 1e-4

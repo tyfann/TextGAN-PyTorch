@@ -1,9 +1,3 @@
-# -*- encoding: utf-8 -*-
-# @ModuleName: preprocess_txt
-# @Function: 
-# @Author: Yufan-tyf
-# @Time: 2022/3/4 9:40 PM
-
 import random
 
 datapath = '../dataset/'
@@ -18,30 +12,45 @@ def cut(name,fname, train_ratio):
     random.shuffle(fname.read())
     train_data = open(datapath + aim, 'wb')
     test_data = open(testpath + goal, 'wb')
-
+    train = open(datapath + 'x.txt', 'ab+')
+    test = open(testpath + 'x_test.txt', 'ab+')
 
     for i, line in enumerate(lines):
         if i < train_offset:
             train_data.write(line)
+            train.write(line)
         else:
             test_data.write(line)
+            test.write(line)
 
     train_data.close()
     test_data.close()
-
+    train.close()
+    test.close()
 
 if __name__ == "__main__":
-    file = open(datapath + 'x.txt', 'r', encoding='utf-8')
+    file = open(datapath + 'toutiao_cat_data.txt', 'r', encoding='utf-8')
     line = file.readline()  # 调用文件的 readline()方法
     while line:
-        str1, str2 = line.split('\t', 1)
-        str2 = str2.split('\n')
-        num = int(str2[0])
-        if len(str1) > 1:
-            aim = 'x_cat' + str2[0] + '.txt'
+        lists = line.split("_!_")
+        num = int(lists[1])
+        if (num > 105 and num < 111):
+            num = num - 101
+        elif (num > 111):
+            num = num - 102
+        else:
+            num = num - 100
+        count = num
+        num = str(num)
+
+        if len(lists) > 1:
+            aim = 'x_cat' + num + '.txt'
             f = open(datapath + aim, 'a+', encoding='utf-8')
-            f.writelines(str1 + '\n')
+            f.writelines(lists[3]+ '\n')
             f.close()
+            F = open(datapath + 'x.txt', 'a+', encoding='utf-8')
+            F.writelines(lists[3]+ '\n')
+            F.close()
         line = file.readline()
     file.close()
     for i in range(15):

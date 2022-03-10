@@ -70,7 +70,7 @@ class CatGenDataIter:
     def _all_data_(self, col):
         return torch.cat([data[col].unsqueeze(0) for data in self.loader.dataset.data], 0)
 
-    def prepare(self, samples_list, gpu=False):
+    def prepare(self, samples_list, gpu=True):
         """Add start_letter to samples as inp, target same as samples"""
         # all_samples = samples_list   #获取文件中的全部内容
         # target = all_samples[::2][0]  #获取文件偶数（从0开始）行的标题
@@ -155,7 +155,7 @@ class CatClasDataIter:
         return torch.cat([data[col].unsqueeze(0) for data in self.loader.dataset.data], 0)
 
     @staticmethod
-    def prepare(samples_list, given_target=None, detach=True, gpu=False):
+    def prepare(samples_list, given_target=None, detach=True, gpu=True):
         """
         Build inp and target
         :param samples_list: list of tensors, [label_0, label_1, ..., label_k]

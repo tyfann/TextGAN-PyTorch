@@ -9,6 +9,7 @@
 from __future__ import print_function
 
 import argparse
+import os.path
 
 import config as cfg
 from utils.text_process import load_test_dict, text_process
@@ -116,6 +117,11 @@ if __name__ == '__main__':
     opt = parser.parse_args()
 
     if opt.if_real_data:
+
+        if os.path.isfile('dataset/' + opt.dataset + '_iw_dict.txt'):
+            os.remove('dataset/' + opt.dataset + '_iw_dict.txt')
+        if os.path.isfile('dataset/' + opt.dataset + '_wi_dict.txt'):
+            os.remove('dataset/' + opt.dataset + '_wi_dict.txt')
         opt.max_seq_len, opt.vocab_size = text_process('dataset/' + opt.dataset + '.txt')
         cfg.extend_vocab_size = len(load_test_dict(opt.dataset)[0])  # init classifier vocab_size
     cfg.init_param(opt)
