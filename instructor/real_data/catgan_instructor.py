@@ -398,6 +398,7 @@ class CatGANInstructor(BasicInstructor):
     def _save(self, phase, epoch, label_i=None):
         assert type(label_i) == int
         torch.save(self.gen.state_dict(), cfg.save_model_root + 'gen_{}_{:05d}.pt'.format(phase, epoch))
+        # samples_c0_ADV_00000.txt
         save_sample_path = cfg.save_samples_root + 'samples_c{}_{}_{:05d}.txt'.format(label_i, phase, epoch)
         samples = self.gen.sample(cfg.batch_size, cfg.batch_size, label_i=label_i)
         write_tokens(save_sample_path, tensor_to_tokens(samples, self.idx2word_dict))

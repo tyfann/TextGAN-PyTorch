@@ -19,7 +19,7 @@ from models.relational_rnn_general import RelationalMemory
 class CatGAN_G(LSTMGenerator):
     def __init__(self, k_label, mem_slots, num_heads, head_size, embedding_dim, hidden_dim, vocab_size, max_seq_len,
                  padding_idx,
-                 gpu=True):
+                 gpu=False):
         super(CatGAN_G, self).__init__(embedding_dim, hidden_dim, vocab_size, max_seq_len, padding_idx, gpu)
         self.name = 'catgan'
 
