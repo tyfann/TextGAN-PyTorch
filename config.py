@@ -17,7 +17,7 @@ import torch
 # ===Program===
 if_test = False
 CUDA = True
-multi_gpu = False
+multi_gpu = True
 if_save = True
 data_shuffle = False  # False
 oracle_pretrain = True  # True
@@ -52,7 +52,7 @@ eval_type = 'Ra'  # standard, rsgan, nll, nll-f1, Ra, bleu3, bleu-f1
 d_type = 'Ra'  # S (Standard), Ra (Relativistic_average)
 vocab_size = 4683  # oracle: 5000, coco: 4683, emnlp: 5256, amazon_app_book: 6418, mr15: 6289
 max_seq_len = 40  # oracle: 20, coco: 37, emnlp: 51, amazon_app_book: 40
-ADV_train_epoch = 2000  # SeqGAN, LeakGAN-200, RelGAN-3000
+ADV_train_epoch = 200  # SeqGAN, LeakGAN-200, RelGAN-3000
 extend_vocab_size = 0  # plus test data, only used for Classifier
 
 temp_adpt = 'exp'  # no, lin, exp, log, sigmoid, quad, sqrt
@@ -91,7 +91,7 @@ use_nll_div = True
 use_bleu = True
 use_self_bleu = False
 use_clas_acc = True
-use_ppl = False
+use_ppl = True
 
 # ===Generator===
 ADV_g_step = 1  # 1

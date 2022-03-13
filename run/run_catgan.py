@@ -103,7 +103,7 @@ use_nll_div = int(True)
 use_bleu = int(True)
 use_self_bleu = int(True)
 use_clas_acc = int(True)
-use_ppl = int(False)
+use_ppl = int(True)
 
 args = [
     # Program
